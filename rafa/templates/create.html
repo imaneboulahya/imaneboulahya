@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/create.css">
+    <title>Rafa | Create</title>
+</head>
+<body>
+    <!-- Skip Navigation (Accessibility) -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+
+    <!-- Header/Navigation -->
+    <header class="navbar">
+        <a href="index.html" class="logo-link">
+            <img src="../static/images/logo.jpeg" alt="Rafa Logo" class="logo-img" width="150" height="50">
+        </a>
+        
+        <button class="toggle-button" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        
+        <nav class="navbar-links">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="create.html">Create</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Profile Creation Section -->
+    <main id="main-content" class="profile-creation">
+        <h1>Create Profile</h1>
+        
+        <div class="profile-type">
+            <button class="profile-type-btn active" id="individual-btn">Individual</button>
+            <button class="profile-type-btn" id="group-btn">Group/Organization</button>
+        </div>
+        
+        <form id="profile-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName" class="required-field">First Name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone" class="required-field">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nationality" class="required-field">Nationality</label>
+                    <select id="nationality" name="nationality" required>
+                        <option value="">Select Nationality</option>
+                        <option value="Morocco">Morocco</option>
+                        <option value="Algeria">Algeria</option>
+                        <option value="Tunisia">Tunisia</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="France">France</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Italy">Italy</option>
+                        <option value="United States">United States</option>
+                        <option value="Canada">Canada</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="passport">Passport Number</label>
+                    <input type="text" id="passport" name="passport">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="cin">CIN (National ID)</label>
+                <input type="text" id="cin" name="cin">
+            </div>
+            
+            <div class="form-group">
+                <label>Profile Photo</label>
+                <div class="photo-upload">
+                    <input type="file" id="photo" name="photo" accept="image/*">
+                    <p>Click to upload photo</p>
+                    <small>Recommended size: 300x300px</small>
+                </div>
+            </div>
+            
+            <div class="form-group" id="group-fields" style="display: none;">
+                <label for="groupName" class="required-field">Group/Organization Name</label>
+                <input type="text" id="groupName" name="groupName" required>
+                
+                <label for="groupDescription">Description</label>
+                <textarea id="groupDescription" name="groupDescription" rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                
+                <div class="group-members-container" id="groupMembersContainer">
+                    <h3>Group Members</h3>
+                    <button type="button" class="add-member-btn" id="addMemberBtn">
+                        <span>+</span> Add Member
+                    </button>
+                    <!-- Group members will be added here dynamically -->
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">Create Profile</button>
+        </form>
+    </main>
+
+    <!-- JavaScript for Mobile Menu and Form -->
+    <script>
+        // Mobile menu toggle
+        const toggleButton = document.querySelector('.toggle-button');
+        const navbarLinks = document.querySelector('.navbar-links');
+
+        toggleButton.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+            toggleButton.classList.toggle('active');
+        });
+
+        // Profile type toggle
+        const individualBtn = document.getElementById('individual-btn');
+        const groupBtn = document.getElementById('group-btn');
+        const groupFields = document.getElementById('group-fields');
+
+        individualBtn.addEventListener('click', () => {
+            individualBtn.classList.add('active');
+            groupBtn.classList.remove('active');
+            groupFields.style.display = 'none';
+        });
+
+        groupBtn.addEventListener('click', () => {
+            groupBtn.classList.add('active');
+            individualBtn.classList.remove('active');
+            groupFields.style.display = 'block';
+        });
+
+        // Photo upload click handler
+        const photoUpload = document.querySelector('.photo-upload');
+        const photoInput = document.getElementById('photo');
+
+        photoUpload.addEventListener('click', () => {
+            photoInput.click();
+        });
+
+        photoInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                photoUpload.innerHTML = `<p>${e.target.files[0].name}</p>`;
+            }
+        });
+
+        // Group members functionality
+        const addMemberBtn = document.getElementById('addMemberBtn');
+        const groupMembersContainer = document.getElementById('groupMembersContainer');
+        let memberCount = 0;
+
+        addMemberBtn.addEventListener('click', () => {
+            memberCount++;
+            const memberDiv = document.createElement('div');
+            memberDiv.className = 'group-member';
+            memberDiv.innerHTML = `
+                <h4>Member ${memberCount}</h4>
+                <button type="button" class="remove-member">×</button>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="memberFirstName${memberCount}" class="required-field">First Name</label>
+                        <input type="text" id="memberFirstName${memberCount}" name="memberFirstName${memberCount}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberLastName${memberCount}">Last Name</label>
+                        <input type="text" id="memberLastName${memberCount}" name="memberLastName${memberCount}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="memberPhone${memberCount}" class="required-field">Phone Number</label>
+                        <input type="tel" id="memberPhone${memberCount}" name="memberPhone${memberCount}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberEmail${memberCount}">Email</label>
+                        <input type="email" id="memberEmail${memberCount}" name="memberEmail${memberCount}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="memberPassport${memberCount}">Passport Number</label>
+                    <input type="text" id="memberPassport${memberCount}" name="memberPassport${memberCount}">
+                </div>
+            `;
+            
+            // Insert before the add member button
+            groupMembersContainer.insertBefore(memberDiv, addMemberBtn);
+            
+            // Add event listener to remove button
+            memberDiv.querySelector('.remove-member').addEventListener('click', () => {
+                memberDiv.remove();
+                memberCount--;
+            });
+        });
+    </script>
+</body>
+</html>

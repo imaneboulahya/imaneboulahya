@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rafa Platform</title>
+  <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+  <!-- Skip Navigation (Accessibility) -->
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Header/Navigation -->
+  <header class="navbar">
+    <a href="index.html" class="logo-link">
+      <img src="../static/images/logo.jpeg" alt="Rafa Logo" class="logo-img" width="150" height="50">
+    </a>
+    
+    <button class="toggle-button" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    
+    <nav class="navbar-links">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="create.html">Create</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <section class="hero">
+      <h1>Welcome to Rafa</h1>
+      <p>A sleek management platform in yellow and black.</p>
+    </section>
+  </main>
+
+  <!-- JavaScript for Mobile Menu -->
+  <script>
+    const toggleButton = document.querySelector('.toggle-button');
+    const navbarLinks = document.querySelector('.navbar-links');
+
+    toggleButton.addEventListener('click', () => {
+      navbarLinks.classList.toggle('active');
+      toggleButton.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

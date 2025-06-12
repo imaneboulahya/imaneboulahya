@@ -3,12 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rafa Platform</title>
+  <title>Rafa Platform - Premium Travel Services</title>
   <link rel="stylesheet" href="../static/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .services-sidebar {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 280px;
+      height: 100vh;
+      background: var(--black);
+      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      transition: right 0.3s ease;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .services-sidebar.active {
+      right: 0;
+    }
+
+    .services-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 2rem;
+    }
+
+    .services-list li {
+      margin-bottom: 1rem;
+    }
+
+    .services-list a {
+      display: block;
+      padding: 0.8rem 1rem;
+      color: var(--white);
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      transition: var(--transition-fast);
+      background-color: rgba(255, 215, 0, 0.1);
+    }
+
+    .services-list a:hover {
+      background-color: var(--primary);
+      color: var(--black);
+      transform: translateX(-5px);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .sidebar-toggle {
+      background-color: var(--primary);
+      color: var(--black);
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-left: 1rem;
+    }
+
+    .sidebar-toggle:hover {
+      background-color: var(--primary-dark);
+      color: var(--white);
+    }
+  </style>
 </head>
 <body>
-  <!-- Skip Navigation (Accessibility) -->
-  <a href="#main-content" class="skip-link">Skip to content</a>
+  <!-- Services Sidebar -->
+  <div class="services-sidebar" id="servicesSidebar">
+    <h3 style="color: var(--primary); border-bottom: 2px solid var(--primary); padding-bottom: 1rem;">Our Services</h3>
+    <ul class="services-list">
+      <li><a href="#">Visa</a></li>
+      <li><a href="#">Hotel</a></li>
+      <li><a href="#">Billet</a></li>
+      <li><a href="#">Hajj</a></li>
+      <li><a href="#">Omra</a></li>
+      <li><a href="#">Autocar</a></li>
+      <li><a href="#">Bateau</a></li>
+      <li><a href="#">Traduction</a></li>
+      <li><a href="#">Assurance</a></li>
+      <li><a href="#">Voyages organisés</a></li>
+      <li><a href="#">Transfert</a></li>
+      <li><a href="#">Statistics</a></li>
+      <li><a href="#">Factures</a></li>
+      <li><a href="#">Transfert</a></li>
+      <li><a href="#">Autre</a></li>
+    </ul>
+  </div>
+  
+  <!-- Overlay -->
+  <div class="overlay" id="overlay"></div>
 
   <!-- Header/Navigation -->
   <header class="navbar">
@@ -27,19 +129,74 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="create.html">Create</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><button class="sidebar-toggle" id="sidebarToggle">Services</button></li>
       </ul>
     </nav>
   </header>
 
   <!-- Main Content -->
   <main id="main-content">
+    <!-- Hero Section -->
     <section class="hero">
-      <h1>Welcome to Rafa</h1>
-      <p>A sleek management platform in yellow and black.</p>
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1>Welcome to <span class="highlight">Rafa</span></h1>
+          <p class="tagline">Your premier travel and lifestyle partner</p>
+          <p class="description">Experience world-class travel services, personalized solutions, and exclusive benefits tailored to your needs. From business travel to spiritual journeys, we handle every detail with care.</p>
+          <a href="#services" class="cta-button">Explore Services</a>
+        </div>
+        <div class="hero-image">
+          <img src="../static/images/—Pngtree—golden polygonal world map_7291667.png" alt="Global Travel Network" class="featured-image">
+        </div>
+      </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services" id="services">
+      <h2>Our <span class="highlight">Services</span></h2>
+      <p class="section-intro">Comprehensive solutions for all your travel and lifestyle needs</p>
+      <div class="services-container">
+        <!-- Service cards remain the same -->
+      </div>
     </section>
   </main>
 
-  <!-- JavaScript for Mobile Menu -->
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3 class="o">Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="create.html">Create Profile</a></li>
+          <li><a href="#services">Services</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3 class="o">Contact Us</h3>
+        <ul>
+          <li>Email: Rafavoyages@gmail.com</li>
+          <li>Phone: +212 650-212366</li>
+          <li>Address: 22 Imm Narjiss 1 Av Allal Ben Abdellah, Taza 35000</li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h3 class="o">Follow Us</h3>
+        <ul>
+          <li><a href="https://www.instagram.com/agencerafavoyages?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">Instagram</a></li>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="https://l.instagram.com/?u=https%3A%2F%2Fwww.facebook.com%2FalmassaAgencyTravel%3Fmibextid%3DZbWKwL&e=AT3ccs3u_i1zc4QkDULuz0zb_WwKbsjkkr8ZsGyPJOQTN4BMvr0wae4eqjQCfU32rL-cRPTbNEbSLjaq3I7AcFUK0iwaMLWlJY7o8nI">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2025 Rafa Platform. All rights reserved.</p>
+    </div>
+  </footer>
+
   <script>
     const toggleButton = document.querySelector('.toggle-button');
     const navbarLinks = document.querySelector('.navbar-links');
@@ -47,6 +204,27 @@
     toggleButton.addEventListener('click', () => {
       navbarLinks.classList.toggle('active');
       toggleButton.classList.toggle('active');
+    });
+
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const servicesSidebar = document.getElementById('servicesSidebar');
+    const overlay = document.getElementById('overlay');
+
+    sidebarToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      servicesSidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      servicesSidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+    document.addEventListener('click', (e) => {
+      if (!servicesSidebar.contains(e.target) && e.target !== sidebarToggle) {
+        servicesSidebar.classList.remove('active');
+        overlay.classList.remove('active');
+      }
     });
   </script>
 </body>

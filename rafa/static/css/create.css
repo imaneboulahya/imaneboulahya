@@ -1,17 +1,13 @@
 :root {
-  /* Color Scheme */
-  --yellow: #ffd700;      /* Vibrant yellow */
-  --black: #000000;       /* Pure black */
-  --white: #ffffff;       /* Pure white */
-  --gray: #333333;        /* Dark gray for text */
-
-  /* Utility Variables */
+  --yellow: #ffd700;
+  --black: #000000;
+  --white: #ffffff;
+  --gray: #333333;
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
   --transition-fast: all 0.15s ease;
 }
 
-/* Base Styles */
 * {
   box-sizing: border-box;
   margin: 0;

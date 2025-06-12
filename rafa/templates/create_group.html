@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/create.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create.css') }}">
     <title>Rafa | Create Group</title>
     <style>
         /* Additional styles for group page */
@@ -55,8 +55,8 @@
 <body>
     <!-- Header/Navigation -->
     <header class="navbar">
-        <a href="index.html" class="logo-link">
-            <img src="../static/images/logo.jpeg" alt="Rafa Logo" class="logo-img" width="150" height="50">
+        <a href="{{ url_for('index') }}" class="logo-link">
+            <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Rafa Logo" class="logo-img" width="150" height="50">
         </a>
         
         <button class="toggle-button" aria-label="Toggle navigation">
@@ -67,8 +67,8 @@
         
         <nav class="navbar-links">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="create.html">Create</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('create_profile') }}">Create</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -78,14 +78,23 @@
     <main id="main-content" class="profile-creation">
         <h1>Create Group Profile</h1>
         <div class="profile-type">
-            <a href="create.html" class="profile-type-btn active" id="individual-btn">Individual</a>
-            <a href="group.html" class="profile-type-btn" id="group-btn">Group/Organization</a>
+            <a href="{{ url_for('create_profile') }}" class="profile-type-btn active" id="individual-btn">Individual</a>
+            <a href="{{ url_for('create_group') }}" class="profile-type-btn" id="group-btn">Group/Organization</a>
         </div>
-        <form id="group-form">
+        <form id="group-form" method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            
             <!-- Group Information -->
             <div class="form-group">
-                <label for="groupName" class="required-field">Group/Organization Name</label>
-                <input type="text" id="groupName" name="groupName" required>
+                {{ form.group_name.label(class="required-field") }}
+                {{ form.group_name(required=true) }}
+                {% if form.group_name.errors %}
+                    <div class="errors">
+                        {% for error in form.group_name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             
             <!-- Group Members Section -->
@@ -102,9 +111,16 @@
             <div class="form-group">
                 <label>Group Documents</label>
                 <div class="photo-upload">
-                    <input type="file" id="groupDocuments" name="groupDocuments" accept="image/*,.pdf,.doc,.docx" multiple>
+                    {{ form.group_documents(accept="image/*,.pdf,.doc,.docx") }}
                     <p>Click to upload group documents</p>
                     <small>You can upload multiple files</small>
+                    {% if form.group_documents.errors %}
+                        <div class="errors">
+                            {% for error in form.group_documents.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             
@@ -127,7 +143,7 @@
 
             // Documents upload click handler
             const docUpload = document.querySelector('.photo-upload');
-            const docInput = document.getElementById('groupDocuments');
+            const docInput = document.getElementById('{{ form.group_documents.id }}');
 
             docUpload.addEventListener('click', () => {
                 docInput.click();
@@ -142,9 +158,9 @@
                 }
             });
 
-            // Add member functionality
-            const addMemberBtn = document.getElementById('addMemberBtn');
+            // Member management
             const membersContainer = document.getElementById('members-container');
+            const addMemberBtn = document.getElementById('addMemberBtn');
             let memberCount = 0;
 
             addMemberBtn.addEventListener('click', () => {
@@ -152,77 +168,26 @@
                 const memberCard = document.createElement('div');
                 memberCard.className = 'member-card';
                 memberCard.innerHTML = `
+                    <button type="button" class="remove-member" onclick="this.parentElement.remove()">×</button>
                     <h3 class="member-title">Member ${memberCount}</h3>
-                    <button type="button" class="remove-member">×</button>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="memberFirstName${memberCount}" class="required-field">First Name</label>
-                            <input type="text" id="memberFirstName${memberCount}" name="memberFirstName${memberCount}" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="memberLastName${memberCount}" class="required-field">Last Name</label>
-                            <input type="text" id="memberLastName${memberCount}" name="memberLastName${memberCount}" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="memberPhone${memberCount}">Phone Number</label>
-                            <input type="tel" id="memberPhone${memberCount}" name="memberPhone${memberCount}">
-                        </div>
-                        <div class="form-group">
-                            <label for="memberEmail${memberCount}">Email</label>
-                            <input type="email" id="memberEmail${memberCount}" name="memberEmail${memberCount}">
-                        </div>
-                    </div>
-                    
                     <div class="form-group">
-                        <label for="memberPassport${memberCount}">Passport Number</label>
-                        <input type="text" id="memberPassport${memberCount}" name="memberPassport${memberCount}">
+                        <label class="required-field">First Name</label>
+                        <input type="text" name="member_first_${memberCount}" required>
                     </div>
-                    
                     <div class="form-group">
-                        <label>Member Photo</label>
-                        <div class="photo-upload">
-                            <input type="file" id="memberPhoto${memberCount}" name="memberPhoto${memberCount}" accept="image/*">
-                            <p>Click to upload photo</p>
-                        </div>
+                        <label class="required-field">Last Name</label>
+                        <input type="text" name="member_last_${memberCount}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="required-field">Phone</label>
+                        <input type="text" name="member_phone_${memberCount}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Passport Number</label>
+                        <input type="text" name="member_passport_${memberCount}">
                     </div>
                 `;
-                
                 membersContainer.appendChild(memberCard);
-                
-                // Add event listener for remove button
-                memberCard.querySelector('.remove-member').addEventListener('click', () => {
-                    memberCard.remove();
-                    memberCount--;
-                });
-                
-                // Add event listener for member photo upload
-                const memberPhotoUpload = memberCard.querySelector('.photo-upload');
-                const memberPhotoInput = memberCard.querySelector('input[type="file"]');
-                
-                memberPhotoUpload.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    memberPhotoInput.click();
-                });
-                
-                memberPhotoInput.addEventListener('change', (e) => {
-                    if (e.target.files.length > 0) {
-                        memberPhotoUpload.querySelector('p').textContent = e.target.files[0].name;
-                    }
-                });
-            });
-
-            // Form submission
-            const groupForm = document.getElementById('group-form');
-            groupForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                // Here you would typically send the form data to the server
-                alert('Group created successfully!');
-                // You might want to redirect to another page after successful creation
-                // window.location.href = 'success.html';
             });
         });
     </script>

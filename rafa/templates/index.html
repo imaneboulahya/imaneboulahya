@@ -9,81 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    .services-sidebar {
-      position: fixed;
-      top: 0;
-      right: -300px;
-      width: 280px;
-      height: 100vh;
-      background: var(--black);
-      box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-      z-index: 1000;
-      transition: right 0.3s ease;
-      padding: 20px;
-      overflow-y: auto;
-    }
 
-    .services-sidebar.active {
-      right: 0;
-    }
-
-    .services-list {
-      list-style: none;
-      padding: 0;
-      margin-top: 2rem;
-    }
-
-    .services-list li {
-      margin-bottom: 1rem;
-    }
-
-    .services-list a {
-      display: block;
-      padding: 0.8rem 1rem;
-      color: var(--white);
-      text-decoration: none;
-      border-radius: var(--border-radius);
-      transition: var(--transition-fast);
-      background-color: rgba(255, 215, 0, 0.1);
-    }
-
-    .services-list a:hover {
-      background-color: var(--primary);
-      color: var(--black);
-      transform: translateX(-5px);
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 999;
-      display: none;
-    }
-
-    .overlay.active {
-      display: block;
-    }
-
-    .sidebar-toggle {
-      background-color: var(--primary);
-      color: var(--black);
-      padding: 0.6rem 1.2rem;
-      border-radius: var(--border-radius);
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
-      margin-left: 1rem;
-    }
-
-    .sidebar-toggle:hover {
-      background-color: var(--primary-dark);
-      color: var(--white);
-    }
   </style>
 </head>
 <body>
@@ -148,15 +74,6 @@
         <div class="hero-image">
           <img src="../static/images/—Pngtree—golden polygonal world map_7291667.png" alt="Global Travel Network" class="featured-image">
         </div>
-      </div>
-    </section>
-    
-    <!-- Services Section -->
-    <section class="services" id="services">
-      <h2>Our <span class="highlight">Services</span></h2>
-      <p class="section-intro">Comprehensive solutions for all your travel and lifestyle needs</p>
-      <div class="services-container">
-        <!-- Service cards remain the same -->
       </div>
     </section>
   </main>

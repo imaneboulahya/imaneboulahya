@@ -389,48 +389,32 @@ a {
     color: red;
 }
 
-/* New styles for group members */
-.group-member {
-    background: #f0f0f0;
-    padding: 1rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
-    position: relative;
-}
-
-.remove-member {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    background: #ff6b6b;
-    color: white;
-    border: none;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.add-member-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: #e0e0e0;
-    border: none;
-    padding: 0.75rem;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-bottom: 1rem;
+#otherServiceGroup {
+    margin-top: 0.5rem;
     transition: all 0.3s ease;
 }
 
-.add-member-btn:hover {
-    background: #d0d0d0;
+#otherServiceGroup input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
 }
 
-.group-members-container {
-    margin-top: 1rem;
-    border-top: 1px solid #ddd;
-    padding-top: 1rem;
+#otherServiceGroup input:invalid {
+    border-color: #ff6b6b;
+}
+#customService {
+  display: none;
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+        
+#customService.show {
+  display: block;
 }

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/create.css">
+    <title>Rafa | Create Group</title>
+    <style>
+        /* Additional styles for group page */
+        .add-member-btn {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .add-member-btn:hover {
+            background-color: black;
+        }
+        
+        .member-card {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .remove-member {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+        
+        .member-title {
+            margin-top: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="navbar">
+        <a href="index.html" class="logo-link">
+            <img src="../static/images/logo.jpeg" alt="Rafa Logo" class="logo-img" width="150" height="50">
+        </a>
+        
+        <button class="toggle-button" aria-label="Toggle navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+        
+        <nav class="navbar-links">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="create.html">Create</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Group Creation Section -->
+    <main id="main-content" class="profile-creation">
+        <h1>Create Group Profile</h1>
+        <div class="profile-type">
+            <a href="create.html" class="profile-type-btn active" id="individual-btn">Individual</a>
+            <a href="group.html" class="profile-type-btn" id="group-btn">Group/Organization</a>
+        </div>
+        <form id="group-form">
+            <!-- Group Information -->
+            <div class="form-group">
+                <label for="groupName" class="required-field">Group/Organization Name</label>
+                <input type="text" id="groupName" name="groupName" required>
+            </div>
+            
+            <!-- Group Members Section -->
+            <h2>Group Members</h2>
+            <div id="members-container">
+                <!-- Member cards will be added here dynamically -->
+            </div>
+            
+            <button type="button" id="addMemberBtn" class="add-member-btn">
+                <span style="font-size: 20px;">+</span> Add Member
+            </button>
+            
+            <!-- Documents Upload -->
+            <div class="form-group">
+                <label>Group Documents</label>
+                <div class="photo-upload">
+                    <input type="file" id="groupDocuments" name="groupDocuments" accept="image/*,.pdf,.doc,.docx" multiple>
+                    <p>Click to upload group documents</p>
+                    <small>You can upload multiple files</small>
+                </div>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Create Group</button>
+        </form>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const toggleButton = document.querySelector('.toggle-button');
+            const navbarLinks = document.querySelector('.navbar-links');
+
+            toggleButton.addEventListener('click', () => {
+                navbarLinks.classList.toggle('active');
+                toggleButton.classList.toggle('active');
+            });
+
+            // Documents upload click handler
+            const docUpload = document.querySelector('.photo-upload');
+            const docInput = document.getElementById('groupDocuments');
+
+            docUpload.addEventListener('click', () => {
+                docInput.click();
+            });
+
+            docInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    const filesText = e.target.files.length === 1 
+                        ? e.target.files[0].name 
+                        : `${e.target.files.length} files selected`;
+                    docUpload.querySelector('p').textContent = filesText;
+                }
+            });
+
+            // Add member functionality
+            const addMemberBtn = document.getElementById('addMemberBtn');
+            const membersContainer = document.getElementById('members-container');
+            let memberCount = 0;
+
+            addMemberBtn.addEventListener('click', () => {
+                memberCount++;
+                const memberCard = document.createElement('div');
+                memberCard.className = 'member-card';
+                memberCard.innerHTML = `
+                    <h3 class="member-title">Member ${memberCount}</h3>
+                    <button type="button" class="remove-member">×</button>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="memberFirstName${memberCount}" class="required-field">First Name</label>
+                            <input type="text" id="memberFirstName${memberCount}" name="memberFirstName${memberCount}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="memberLastName${memberCount}" class="required-field">Last Name</label>
+                            <input type="text" id="memberLastName${memberCount}" name="memberLastName${memberCount}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="memberPhone${memberCount}">Phone Number</label>
+                            <input type="tel" id="memberPhone${memberCount}" name="memberPhone${memberCount}">
+                        </div>
+                        <div class="form-group">
+                            <label for="memberEmail${memberCount}">Email</label>
+                            <input type="email" id="memberEmail${memberCount}" name="memberEmail${memberCount}">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="memberPassport${memberCount}">Passport Number</label>
+                        <input type="text" id="memberPassport${memberCount}" name="memberPassport${memberCount}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Member Photo</label>
+                        <div class="photo-upload">
+                            <input type="file" id="memberPhoto${memberCount}" name="memberPhoto${memberCount}" accept="image/*">
+                            <p>Click to upload photo</p>
+                        </div>
+                    </div>
+                `;
+                
+                membersContainer.appendChild(memberCard);
+                
+                // Add event listener for remove button
+                memberCard.querySelector('.remove-member').addEventListener('click', () => {
+                    memberCard.remove();
+                    memberCount--;
+                });
+                
+                // Add event listener for member photo upload
+                const memberPhotoUpload = memberCard.querySelector('.photo-upload');
+                const memberPhotoInput = memberCard.querySelector('input[type="file"]');
+                
+                memberPhotoUpload.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    memberPhotoInput.click();
+                });
+                
+                memberPhotoInput.addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        memberPhotoUpload.querySelector('p').textContent = e.target.files[0].name;
+                    }
+                });
+            });
+
+            // Form submission
+            const groupForm = document.getElementById('group-form');
+            groupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Here you would typically send the form data to the server
+                alert('Group created successfully!');
+                // You might want to redirect to another page after successful creation
+                // window.location.href = 'success.html';
+            });
+        });
+    </script>
+</body>
+</html>

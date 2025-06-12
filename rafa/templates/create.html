@@ -7,9 +7,6 @@
     <title>Rafa | Create</title>
 </head>
 <body>
-    <!-- Skip Navigation (Accessibility) -->
-    <a href="#main-content" class="skip-link">Skip to content</a>
-
     <!-- Header/Navigation -->
     <header class="navbar">
         <a href="index.html" class="logo-link">
@@ -36,8 +33,8 @@
         <h1>Create Profile</h1>
         
         <div class="profile-type">
-            <button class="profile-type-btn active" id="individual-btn">Individual</button>
-            <button class="profile-type-btn" id="group-btn">Group/Organization</button>
+            <button type="button" class="profile-type-btn active" id="individual-btn">Individual</button>
+            <a href="group.html" class="profile-type-btn" id="group-btn">Group/Organization</a>
         </div>
         
         <form id="profile-form">
@@ -93,6 +90,26 @@
             </div>
             
             <div class="form-group">
+                <label for="serviceType" class="required-field">Type de Service</label>
+                <select id="serviceType" name="serviceType" required>
+                    <option value="" disabled selected>Sélectionnez un service</option>
+                    <option value="visa">Visa</option>
+                    <option value="hotel">Hôtel</option>
+                    <option value="billet">Billet</option>
+                    <option value="hajj">Hajj</option>
+                    <option value="omra">Omra</option>
+                    <option value="autocar">Autocar</option>
+                    <option value="bateau">Bateau</option>
+                    <option value="traduction">Traduction</option>
+                    <option value="assurance">Assurance</option>
+                    <option value="voyage_organise">Voyage organisé</option>
+                    <option value="transfert">Transfert</option>
+                    <option value="other">Autre (précisez)...</option>
+                </select>
+                <input type="text" id="customService" name="customService" placeholder="Entrez le nom du service">
+            </div>
+            
+            <div class="form-group">
                 <label>Profile Photo</label>
                 <div class="photo-upload">
                     <input type="file" id="photo" name="photo" accept="image/*">
@@ -101,19 +118,11 @@
                 </div>
             </div>
             
-            <div class="form-group" id="group-fields" style="display: none;">
-                <label for="groupName" class="required-field">Group/Organization Name</label>
-                <input type="text" id="groupName" name="groupName" required>
-                
-                <label for="groupDescription">Description</label>
-                <textarea id="groupDescription" name="groupDescription" rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px;"></textarea>
-                
-                <div class="group-members-container" id="groupMembersContainer">
-                    <h3>Group Members</h3>
-                    <button type="button" class="add-member-btn" id="addMemberBtn">
-                        <span>+</span> Add Member
-                    </button>
-                    <!-- Group members will be added here dynamically -->
+            <div class="form-group">
+                <label>Documents</label>
+                <div class="photo-upload">
+                    <input type="file" id="documents" name="documents" accept="image/*,.pdf,.doc,.docx">
+                    <p>Click to upload documents</p>
                 </div>
             </div>
             
@@ -123,91 +132,69 @@
 
     <!-- JavaScript for Mobile Menu and Form -->
     <script>
-        // Mobile menu toggle
-        const toggleButton = document.querySelector('.toggle-button');
-        const navbarLinks = document.querySelector('.navbar-links');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const toggleButton = document.querySelector('.toggle-button');
+            const navbarLinks = document.querySelector('.navbar-links');
 
-        toggleButton.addEventListener('click', () => {
-            navbarLinks.classList.toggle('active');
-            toggleButton.classList.toggle('active');
-        });
+            toggleButton.addEventListener('click', () => {
+                navbarLinks.classList.toggle('active');
+                toggleButton.classList.toggle('active');
+            });
 
-        // Profile type toggle
-        const individualBtn = document.getElementById('individual-btn');
-        const groupBtn = document.getElementById('group-btn');
-        const groupFields = document.getElementById('group-fields');
+            // Photo upload click handler
+            const photoUpload = document.querySelector('.photo-upload');
+            const photoInput = document.getElementById('photo');
 
-        individualBtn.addEventListener('click', () => {
-            individualBtn.classList.add('active');
-            groupBtn.classList.remove('active');
-            groupFields.style.display = 'none';
-        });
+            photoUpload.addEventListener('click', () => {
+                photoInput.click();
+            });
 
-        groupBtn.addEventListener('click', () => {
-            groupBtn.classList.add('active');
-            individualBtn.classList.remove('active');
-            groupFields.style.display = 'block';
-        });
+            photoInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    photoUpload.querySelector('p').textContent = e.target.files[0].name;
+                }
+            });
 
-        // Photo upload click handler
-        const photoUpload = document.querySelector('.photo-upload');
-        const photoInput = document.getElementById('photo');
+            // Documents upload click handler
+            const docUpload = document.querySelectorAll('.photo-upload')[1];
+            const docInput = document.getElementById('documents');
 
-        photoUpload.addEventListener('click', () => {
-            photoInput.click();
-        });
+            docUpload.addEventListener('click', () => {
+                docInput.click();
+            });
 
-        photoInput.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                photoUpload.innerHTML = `<p>${e.target.files[0].name}</p>`;
-            }
-        });
+            docInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    docUpload.querySelector('p').textContent = e.target.files[0].name;
+                }
+            });
 
-        // Group members functionality
-        const addMemberBtn = document.getElementById('addMemberBtn');
-        const groupMembersContainer = document.getElementById('groupMembersContainer');
-        let memberCount = 0;
+            // Service type custom field handling
+            const serviceTypeSelect = document.getElementById('serviceType');
+            const customServiceInput = document.getElementById('customService');
 
-        addMemberBtn.addEventListener('click', () => {
-            memberCount++;
-            const memberDiv = document.createElement('div');
-            memberDiv.className = 'group-member';
-            memberDiv.innerHTML = `
-                <h4>Member ${memberCount}</h4>
-                <button type="button" class="remove-member">×</button>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="memberFirstName${memberCount}" class="required-field">First Name</label>
-                        <input type="text" id="memberFirstName${memberCount}" name="memberFirstName${memberCount}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="memberLastName${memberCount}">Last Name</label>
-                        <input type="text" id="memberLastName${memberCount}" name="memberLastName${memberCount}">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="memberPhone${memberCount}" class="required-field">Phone Number</label>
-                        <input type="tel" id="memberPhone${memberCount}" name="memberPhone${memberCount}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="memberEmail${memberCount}">Email</label>
-                        <input type="email" id="memberEmail${memberCount}" name="memberEmail${memberCount}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="memberPassport${memberCount}">Passport Number</label>
-                    <input type="text" id="memberPassport${memberCount}" name="memberPassport${memberCount}">
-                </div>
-            `;
+            serviceTypeSelect.addEventListener('change', function() {
+                if (this.value === 'other') {
+                    customServiceInput.classList.add('show');
+                    customServiceInput.required = true;
+                    customServiceInput.focus();
+                } else {
+                    customServiceInput.classList.remove('show');
+                    customServiceInput.required = false;
+                    customServiceInput.value = '';
+                }
+            });
+
+            // Form validation
+            const profileForm = document.getElementById('profile-form');
             
-            // Insert before the add member button
-            groupMembersContainer.insertBefore(memberDiv, addMemberBtn);
-            
-            // Add event listener to remove button
-            memberDiv.querySelector('.remove-member').addEventListener('click', () => {
-                memberDiv.remove();
-                memberCount--;
+            profileForm.addEventListener('submit', function(e) {
+                if (serviceTypeSelect.value === 'other' && !customServiceInput.value.trim()) {
+                    e.preventDefault();
+                    alert('Veuillez préciser le service');
+                    customServiceInput.focus();
+                }
             });
         });
     </script>

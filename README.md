@@ -40,10 +40,9 @@
 
 ---
 
-### 📈 GitHub Stats
+### 📊 GitHub Activity
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=imaneboulahya&show_icons=true&theme=radical&hide_border=true" alt="Imane's GitHub stats" width="48%" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=imaneboulahya&layout=compact&theme=radical&hide_border=true" alt="Top Languages" width="40%" />
+  <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=imaneboulahya&theme=radical" alt="GitHub Stats" width="100%" />
 </p>
 
 ---
